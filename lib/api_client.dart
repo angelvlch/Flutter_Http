@@ -6,7 +6,7 @@ import 'package:http/post.dart';
 class Client {
   final client = HttpClient();
 
-  void getPost() async {
+  Future<List<Post>> getPost() async {
     final url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
     HttpClientRequest request = await client.getUrl(url);
     HttpClientResponse response = await request.close();
@@ -16,6 +16,6 @@ class Client {
     final posts = jsonData.map((e) {
       return Post.fromJson(e as Map<String, dynamic>);
     }).toList();
-    print(posts);
+    return posts;
   }
 }

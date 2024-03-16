@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/api_client.dart';
 import 'package:http/configs/routes.dart';
 import 'package:http/mainScreen.dart';
 
@@ -12,7 +11,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Client().getPost();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: _routes,

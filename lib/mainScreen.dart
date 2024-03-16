@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/api_client.dart';
+import 'package:http/post.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -8,6 +10,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late Future<List<Post>> posts;
+  @override
+  void initState() {
+    super.initState();
+    posts = Client().getPost();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,18 +25,31 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: SafeArea(
         child: Container(
-          child: ListView.builder(
-            itemBuilder: _itemBuilder,
-            itemCount: 10,
-          ),
-        ),
+            child: FutureBuilder(
+                future: posts,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (snapshot.hasError) {
+                    return Text(snapshot.hasError.toString());
+                  } else {
+                    List<Post> l = snapshot.data!.toList();
+                    return ListView.builder(
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(foo(l, index)),
+                        );
+                      },
+                      itemCount: l.length,
+                    );
+                  }
+                })),
       ),
     );
   }
 
-  ListTile _itemBuilder(BuildContext context, int index) {
-    return ListTile(
-        //  title: Text(await Client().getPost(),),
-        );
+  String foo(List<Post> l, int index) {
+    return "${l[index].userId} and ${l[index].id}";
   }
 }
