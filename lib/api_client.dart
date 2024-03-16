@@ -26,16 +26,20 @@ import 'package:https/post.dart';
 import 'package:http/http.dart' as http;
 
 class Client {
-  Future<void> getPost() async {
+  Future<List<Post>> getPost() async {
     try {
       final response = await http
           .get(Uri.parse("https://jsonplaceholder.typicode.com/posts"));
-      print("okey");
-      /* if (response.statusCode != 200) {
-       t */
-      //}
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body)
+            .map((e) => Post.fromJson(e as Map<String, dynamic>))
+            .toList();
+        return data;
+      } else {
+        print('${response.statusCode}');
+      }
     } catch (error) {
-      print(error);
+      print("ERROR: $error");
     }
   }
 }

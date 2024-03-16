@@ -4,7 +4,6 @@ import 'package:https/configs/routes.dart';
 import 'package:https/mainScreen.dart';
 
 void main() {
-  Client().getPost();
   runApp(const App());
 }
 

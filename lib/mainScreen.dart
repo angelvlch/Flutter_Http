@@ -14,7 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    //posts = Client().getPost();
+    posts = Client().getPost();
   }
 
   @override
