@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http/configs/routes.dart';
-import 'package:http/mainScreen.dart';
+import 'package:https/api_client.dart';
+import 'package:https/configs/routes.dart';
+import 'package:https/mainScreen.dart';
 
 void main() {
+  Client().getPost();
   runApp(const App());
 }
 

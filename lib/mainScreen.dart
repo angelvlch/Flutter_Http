@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/api_client.dart';
-import 'package:http/post.dart';
+import 'package:https/api_client.dart';
+import 'package:https/post.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,7 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    posts = Client().getPost();
+    //posts = Client().getPost();
   }
 
   @override
@@ -50,6 +50,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   String foo(List<Post> l, int index) {
-    return "${l[index].userId} and ${l[index].id}";
+    return "${l[index].userId} and ${l[index].id} ";
   }
 }

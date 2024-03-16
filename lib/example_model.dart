@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/post.dart';
+import 'package:https/post.dart';
 
 class ExampleWidgetModel extends ChangeNotifier {
   var _post = <Post>[];
