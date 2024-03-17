@@ -17,22 +17,23 @@ class _MainScreenState extends State<MainScreen> {
         child: FutureBuilder(
           future: Client().getPost(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
-            if (snapshot.hasError) {
-              return Text(snapshot.hasError.toString());
-            } else {
-              List<Post> l = snapshot.data!;
-              return ListView.builder(
+            if (snapshot.hasData) {
+              return ListView.separated(
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(printPost(l, index)),
+                    title: Text(printPost(snapshot.data!, index)),
                   );
                 },
-                itemCount: l.length,
+                itemCount: snapshot.data!.length,
               );
             }
+
+            if (snapshot.hasError) {
+              return Text(snapshot.hasError.toString());
+            }
+            return const CircularProgressIndicator();
           },
         ),
       ),
@@ -40,12 +41,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   String printPost(List<Post> posts, int index) {
-    return "${posts[index].userId}, ${posts[index].id},${posts[index].title},${posts[index].body} ";
-  }
-
-  ListTile itemBuilderPost(int index) {
-    return ListTile(
-      title: Text("$index"),
-    );
+    return "userId: ${posts[index].userId}\nid: ${posts[index].id}\ntitle: ${posts[index].title}\nbody: ${posts[index].body} ";
   }
 }
