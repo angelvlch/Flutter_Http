@@ -20,26 +20,24 @@ class Client {
   }
 } */
 import 'dart:convert';
-import 'dart:io';
-import 'package:https/post.dart';
+
+import 'package:https/models/post.dart';
 
 import 'package:http/http.dart' as http;
 
 class Client {
   Future<List<Post>> getPost() async {
-    try {
-      final response = await http
-          .get(Uri.parse("https://jsonplaceholder.typicode.com/posts"));
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body)
-            .map((e) => Post.fromJson(e as Map<String, dynamic>))
-            .toList();
-        return data;
-      } else {
-        print('${response.statusCode}');
-      }
-    } catch (error) {
-      print("ERROR: $error");
+    final response =
+        await http.get(Uri.parse("https://jsonplaceholder.typicode.com/posts"));
+
+    if (response.statusCode == 200) {
+      // почему здесь обязательно указывать тип  List<dynamic> и List<Post> ? (без этого была ошибка)
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      final List<Post> data = jsonData.map((e) => Post.fromJson(e)).toList();
+
+      return data;
+    } else {
+      throw Exception('Failed to load...');
     }
   }
 }

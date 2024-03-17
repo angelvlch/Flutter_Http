@@ -11,9 +11,6 @@ class Post {
     required this.body,
   });
 
-  @override
-  toString() =>
-      "POST:\n ${this.id}, ${this.userId}, ${this.title}, ${this.body}";
   factory Post.fromJson(Map<String, dynamic> jsonMap) {
     return Post(
       userId: jsonMap['userId'] as int,
